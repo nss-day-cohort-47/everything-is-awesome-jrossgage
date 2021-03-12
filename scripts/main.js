@@ -5,19 +5,38 @@ import { makeLegoList } from './legos/LegoList.js';
 //find location on the DOM
 const navElement = document.querySelector("nav");  //designating navElement as "nav" location on html (under the <h1>)
 
-//Add click event Listener for nav buttons
+//Add click event Listener for color nav buttons
 navElement.addEventListener("click", (event) => {     //adding a click event listener to the navElement
 	if (event.target.id === "showRed") {				//conditional statement targeting "showBlue" id (the blue button id). Saying if the "click" event happens on the "showBlue" target.
-		filterLegos("Red")}
+		filterLegosColor("Red")}
 	else if (event.target.id === "showGreen") {				//conditional statement targeting "showBlue" id (the blue button id). Saying if the "click" event happens on the "showBlue" target.
-			filterLegos("Green") 						//Calls function filterLegos accepting a parameter of "Blue". *Why is Blue a string here*??
+			filterLegosColor("Green") 						//Calls function filterLegos accepting a parameter of "Blue". *Why is Blue a string here*??
   } else if (event.target.id === "showAll") {			//else if conditional statement targeting "showAll" id (the showAll button). *Is this just a method to keep the code dry?*
 			makeLegoList(useLegos())						//Calls function makeLegoList accepting a parameter of the function useLegos
 		}
 	})
 
-//accepts click event listener for blue button. Filters list for blue legos
-const filterLegos = (whatFilter) => {					//declares filterLegos function with a parameter of whatFilter
+	
+	// Add change event Listener for drop down menu. 
+	navElement.addEventListener("change", event => {
+		// debugger
+		if (event.target.id === "material") {
+			filterLegosMaterial(event.target.value)
+		}
+	}); 
+
+    //filter for materials drop down
+	const filterLegosMaterial = (whatFilter) => {					
+		const filterArray = useLegos().filter(singleLego => {	
+			if (singleLego.Material.includes(whatFilter)) {		
+				return singleLego;								
+			}													
+		})														
+		makeLegoList(filterArray);
+	}
+
+//Filter for color buttons. Accepts click event listener for red button. Filters list for red legos
+const filterLegosColor = (whatFilter) => {					//declares filterLegos function with a parameter of whatFilter
 	const filterArray = useLegos().filter(singleLego => {	//declares filterArray variable storing useLego function with a filter method.
 		if (singleLego.LegoName.includes(whatFilter)) {		//inside the filter method return, singleLego is the parameter. 
 			return singleLego;								//An if statement designating the singleLego (the parameter storing filtered information from useLegos()) LegoName key value.
@@ -35,4 +54,4 @@ const startEIA = () => {								//declares startEIA function with no parameter (
 
 }
 
-startEIA();										//startEIA is called. 
+startEIA();										
