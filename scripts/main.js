@@ -8,32 +8,53 @@ const navElement = document.querySelector("nav");  //designating navElement as "
 //Add click event Listener for color nav buttons
 navElement.addEventListener("click", (event) => {     //adding a click event listener to the navElement
 	if (event.target.id === "showRed") {				//conditional statement targeting "showBlue" id (the blue button id). Saying if the "click" event happens on the "showBlue" target.
-		filterLegosColor("Red")}
+		filterLegosColor("Red")
+	}
 	else if (event.target.id === "showGreen") {				//conditional statement targeting "showBlue" id (the blue button id). Saying if the "click" event happens on the "showBlue" target.
-			filterLegosColor("Green") 						//Calls function filterLegos accepting a parameter of "Blue". *Why is Blue a string here*??
-  } else if (event.target.id === "showAll") {			//else if conditional statement targeting "showAll" id (the showAll button). *Is this just a method to keep the code dry?*
-			makeLegoList(useLegos())						//Calls function makeLegoList accepting a parameter of the function useLegos
+		filterLegosColor("Green") 						//Calls function filterLegos accepting a parameter of "Blue". *Why is Blue a string here*??
+	} else if (event.target.id === "showAll") {			//else if conditional statement targeting "showAll" id (the showAll button). *Is this just a method to keep the code dry?*
+		makeLegoList(useLegos())						//Calls function makeLegoList accepting a parameter of the function useLegos
+	}
+})
+
+// Add change event Listener for drop down menu. 
+navElement.addEventListener("change", event => {
+	if (event.target.id === "material") {
+		filterLegosMaterial(event.target.value)
+	}
+});
+
+// Add click event listener for search button.
+navElement.addEventListener("click", (event) => {
+	const singleLegoArray = []
+	if (event.target.id === "searchButton"){	
+		const searchElement = document.querySelector("#searchField") 
+		const legoData = useLegos();   
+		const foundLego = legoData.find((lego) => {
+			return lego.LegoId === searchElement.value
+		})
+		console.log(foundLego); 
+		makeLegoList(foundLego);
+	}
+});
+
+//add enter event listener
+navElement.addEventListener("keypress", (event) => {     
+	if (event.target.id === "showRed") {				
+		filterLegosColor("Red")
+	}
+});
+
+
+//filter for materials drop down
+const filterLegosMaterial = (whatFilter) => {
+	const filterArray = useLegos().filter(singleLego => {
+		if (singleLego.Material.includes(whatFilter)) {
+			return singleLego;
 		}
 	})
-
-	
-	// Add change event Listener for drop down menu. 
-	navElement.addEventListener("change", event => {
-		// debugger
-		if (event.target.id === "material") {
-			filterLegosMaterial(event.target.value)
-		}
-	}); 
-
-    //filter for materials drop down
-	const filterLegosMaterial = (whatFilter) => {					
-		const filterArray = useLegos().filter(singleLego => {	
-			if (singleLego.Material.includes(whatFilter)) {		
-				return singleLego;								
-			}													
-		})														
-		makeLegoList(filterArray);
-	}
+	makeLegoList(filterArray);
+}
 
 //Filter for color buttons. Accepts click event listener for red button. Filters list for red legos
 const filterLegosColor = (whatFilter) => {					//declares filterLegos function with a parameter of whatFilter
@@ -54,4 +75,4 @@ const startEIA = () => {								//declares startEIA function with no parameter (
 
 }
 
-startEIA();										
+startEIA();
