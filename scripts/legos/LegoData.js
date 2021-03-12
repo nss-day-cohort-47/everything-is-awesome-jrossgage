@@ -8,8 +8,8 @@ export const useLegos = () => {   //useLegos function is declared
 export const loadLegos = () => {          //declares loadLego function with no parameter
   return fetch("../data/lego-colors.json")    //returns a fetch call for the lego colors json
     .then(response => response.json())      //after fetch call is completed, data is stored in response then put into json format
-    .then((parsedResponse) => {                //after json() method is completed, data is stored in legoArray
-      apiLegos = parsedResponse.LegoColorss;   //apiLegos is set to legoArray.LegoColorss
-      return parsedResponse.LegoColorss;       //returns legoArray.LegoColorss. 
+    .then((legoArray) => {                //after json() method is completed, data is stored in legoArray
+      apiLegos = legoArray.LegoColorss;   //apiLegos is set to legoArray.LegoColorss
+      return legoArray.LegoColorss;       //returns legoArray.LegoColorss. 
     })
 };
