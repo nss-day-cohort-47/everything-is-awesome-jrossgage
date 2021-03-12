@@ -1,14 +1,15 @@
-let apiLegos = [];
+let apiLegos = [];      //apiLegos is declared storing an empty array. This variable is accessible to the functions below.
 
-export const useLegos = () => {
-  return [...apiLegos]
+export const useLegos = () => {   //useLegos function is declared
+  return [...apiLegos]            //returns a copy of apiLegos
 }
 
-export const loadLegos = () => {
-  return fetch("../data/lego-colors.json")
-    .then(response => response.json())
-    .then((legoArray) => {
-      apiLegos = legoArray.LegoColorss;
-      return legoArray.LegoColorss;
+//Pulls LegoColorss data from the api. LegoColorss is the complete array of objects.
+export const loadLegos = () => {          //declares loadLego function with no parameter
+  return fetch("../data/lego-colors.json")    //returns a fetch call for the lego colors json
+    .then(response => response.json())      //after fetch call is completed, data is stored in response then put into json format
+    .then((parsedResponse) => {                //after json() method is completed, data is stored in legoArray
+      apiLegos = parsedResponse.LegoColorss;   //apiLegos is set to legoArray.LegoColorss
+      return parsedResponse.LegoColorss;       //returns legoArray.LegoColorss. 
     })
 };
