@@ -26,15 +26,16 @@ navElement.addEventListener("change", event => {
 
 // Add click event listener for search button.
 navElement.addEventListener("click", (event) => {
-	const singleLegoArray = []
+	let singleLegoArray = []
 	if (event.target.id === "searchButton"){	
 		const searchElement = document.querySelector("#searchField") 
 		const legoData = useLegos();   
-		const foundLego = legoData.find((lego) => {
+		let foundLego = legoData.find((lego) => {
 			return lego.LegoId === searchElement.value
 		})
-		console.log(foundLego); 
-		makeLegoList(foundLego);
+		singleLegoArray.push(foundLego);
+		console.log(singleLegoArray); 
+		makeLegoList(singleLegoArray);
 	}
 });
 
